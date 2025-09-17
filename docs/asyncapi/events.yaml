@@ -1,0 +1,23 @@
+{
+  "asyncapi": "2.6.0",
+  "info": {
+    "title": "AI Platform Events",
+    "version": "1.0.0"
+  },
+  "channels": {
+    "job.created": {
+      "subscribe": {
+        "message": {
+          "name": "JobCreated"
+        }
+      }
+    },
+    "job.completed": {
+      "subscribe": {
+        "message": {
+          "name": "JobCompleted"
+        }
+      }
+    }
+  }
+}
