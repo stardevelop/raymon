@@ -1,0 +1,24 @@
+# Node
+node_modules/
+pnpm-lock.yaml
+npm-debug.log*
+
+# Python
+__pycache__/
+.venv/
+.env
+
+# OS
+.DS_Store
+
+# Build
+dist/
+build/
+coverage/
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+*.local.yaml
