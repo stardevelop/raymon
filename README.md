@@ -1,6 +1,6 @@
-[Uploading AI_Platform_Developers_Handbook.md…]()
 
-# 🚀 Multi-Modal AI Platform — Developers’ Handbook (Shareable README)
+
+# 🚀 Multi-Modal AI Platform — Developers’ Handbook
 
 > Version: 1.0 • Owner: Platform Engineering • Audience: Junior–Mid Developers
 
@@ -8,7 +8,7 @@ This document is an end‑to‑end, **junior‑friendly** guide that explains **
 
 ---
 
-## 1) What We’re Building (Plain English)
+## 1) What We’re Building
 
 We’re creating one API that can handle **Text**, **Image**, **Audio**, and **Video** generation/processing. Every request can be executed in **two ways**:
 
@@ -17,7 +17,7 @@ We’re creating one API that can handle **Text**, **Image**, **Audio**, and **V
 
 A **Router** decides which path is used per request (fastest, cheapest, or SLA/policy‑safe). We **stream results**, **meter usage**, **capture cost**, and **store artifacts** (e.g., images/audio/video) securely. The platform is **multi‑tenant** with **SSO**, **quotas**, **observability**, **billing**, and **reliable workflows** built in.
 
----
+
 
 ## 2) Mental Model & Diagram
 
@@ -31,7 +31,8 @@ A **Router** decides which path is used per request (fastest, cheapest, or SLA/p
 
 ### ASCII Lifecycle
 
-```
+
+
 Client
   |  HTTP/2 + Bearer API key / OIDC
   v
@@ -57,7 +58,6 @@ Client
                                                            \        ClickHouse (analytics), NATS events
 ```
 
----
 
 ## 3) Tech Stack (Primary Choices, with “Why”)
 
@@ -112,7 +112,7 @@ Client
 - SDKs: **TypeScript/Node**, **Python**, **Go**, **Java** (generated from OpenAPI).  
 - Docs: **Docusaurus** or **Nextra**.
 
----
+
 
 ## 4) Local Development (Step‑by‑Step)
 
@@ -131,7 +131,7 @@ mc mb local/artifacts-dev
 ### Option B — kind + Helm (closer to prod)
 Create a kind cluster and install the same components via Helm charts. Use `kubectl port-forward` for local access.
 
----
+
 
 ## 5) Database Schema, RLS & Migrations (PostgreSQL 16)
 
@@ -157,7 +157,7 @@ create policy by_workspace on jobs
 
 Keycloak dev bootstrap: `http://localhost:8080` → admin/admin → create realm “dev”, client “portal”, roles: owner/admin/developer/analyst.
 
----
+
 
 ## 7) Jobs API (Stable Contract)
 
@@ -217,7 +217,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 }
 ```
 
----
+
 
 ## 9) Adapters
 
@@ -239,7 +239,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 - **Whisper (Faster‑Whisper)**: STT → text + timings; diarization optional.  
 - **Coqui/Piper**: TTS → wav; upload to MinIO; return presigned URL.
 
----
+
 
 ## 10) File Service (Uploads, Presign, AV Scan)
 
@@ -249,7 +249,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 3) Server AV‑scans (ClamAV), MIME checks, size limits.  
 4) Save `uri`, `sha256`, `size_bytes`, `mime` into `artifacts` table.
 
----
+
 
 ## 11) Usage Metering & Billing (Technical Only)
 
@@ -267,7 +267,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 - **Logs**: Structured JSON; no PII; include `job_id`, `workspace_id`, `route`, `provider`.  
 - **Dashboards**: Provider health; per‑tenant usage/cost; Temporal pipeline success & latency.
 
----
+
 
 ## 13) Security Defaults (Copy Into Policy)
 
@@ -288,7 +288,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 - **Pagination**: cursor‑based (`?cursor=...&limit=...`).  
 - **IDs/time**: ULIDs; ISO‑8601 UTC timestamps.
 
----
+
 
 ## 15) Temporal Workflows (Reliable Multi‑Step Jobs)
 
@@ -307,7 +307,6 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 - **Security**: OWASP ZAP baseline, Semgrep static analysis, OPA policy tests.  
 - **Chaos (staging)**: kill pod, inject latency; verify router fallback.
 
----
 
 ## 17) CI/CD Templates
 
@@ -315,14 +314,14 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 - **Argo CD**: app‑of‑apps; automated sync, prune, self‑heal.  
 - **Helm Values**: per service (image, env, resources, ingress).
 
----
+
 
 ## 18) Quotas & Rate Limits (Redis Token Bucket)
 
 - Per‑workspace: daily tokens/audio‑sec/GPU‑sec, concurrent jobs.  
 - Edge rate limits (burst) at gateway; **authoritative** check in Jobs API.
 
----
+
 
 ## 19) Repo Layout (Monorepo)
 
@@ -345,7 +344,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 /docs/{openapi,asyncapi,runbooks}
 ```
 
----
+
 
 ## 20) SLOs, Retention, Backups
 
@@ -353,7 +352,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 - **Retention**: artifacts 30d (overridable), logs ≥ 1y, ledger ≥ 10y.  
 - **Backups**: Postgres PITR + nightly full; MinIO versioning + lifecycle + weekly WORM snapshot; ClickHouse weekly snapshots.
 
----
+
 
 ## 21) Definition of Done (Per Feature)
 
@@ -365,7 +364,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 - Helm values + Argo app updated; deployed to **staging**.  
 - Security checks pass (Trivy, Semgrep, OPA gates).
 
----
+
 
 ## 22) First Tickets to Start Today
 
@@ -379,7 +378,7 @@ export function choose(cands: Candidate[], policy:"lowest_latency"|"cheapest"|"s
 8. **File service** with MinIO presign + AV scan.  
 9. **Portal MVP**: API key manager + Playground for text streaming.
 
----
+
 
 ## 23) Glossary
 
